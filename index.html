@@ -1,0 +1,3414 @@
+<html lang="en" class="scroll-smooth"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Casa - The Holo Edition</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<script src="https://animatedicons.co/scripts/embed-animated-icons.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+
+<style>
+
+body {
+
+font-family: 'Inter', sans-serif;
+
+background-color: #ffffff;
+
+color: #18181b;
+
+}
+
+/* Hide scrollbar for clean UI */
+
+.no-scrollbar::-webkit-scrollbar {
+
+display: none;
+
+}
+
+.no-scrollbar {
+
+-ms-overflow-style: none;
+
+scrollbar-width: none;
+
+}
+
+/* Custom gradient text utility */
+
+.text-gradient {
+
+background: linear-gradient(to bottom right, #09090b, #52525b);
+
+-webkit-background-clip: text;
+
+-webkit-text-fill-color: transparent;
+
+}
+
+/* Timeline Gradient Line */
+
+.timeline-gradient {
+
+background: linear-gradient(to bottom, #10b981, #6366f1, #f97316);
+
+}
+
+/* Scroll Animations */
+
+.reveal {
+
+opacity: 0;
+
+transform: translateY(30px);
+
+transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+
+will-change: transform, opacity;
+
+}
+
+.reveal.active {
+
+opacity: 1;
+
+transform: translateY(0);
+
+}
+
+.reveal-scale {
+
+opacity: 0;
+
+transform: scale(0.95) translateY(20px);
+
+transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
+.reveal-scale.active {
+
+opacity: 1;
+
+transform: scale(1) translateY(0);
+
+}
+
+/* Stagger delays */
+
+.delay-100 { transition-delay: 100ms; }
+
+.delay-200 { transition-delay: 200ms; }
+
+.delay-300 { transition-delay: 300ms; }
+
+/* Auto-scroll animation */
+
+@keyframes scroll-up {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.scroll-container {
+  animation: scroll-up 30s linear infinite;
+  will-change: transform;
+}
+
+.scroll-container > div {
+  flex-shrink: 0;
+}
+
+.scroll-container:hover {
+  animation-play-state: paused;
+}
+
+</style></head>
+
+<body class="antialiased selection:bg-emerald-100 selection:text-emerald-900 relative overflow-x-hidden">
+
+
+
+    <!-- Background Ambient Glows -->
+
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+
+        <div class="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-emerald-50/60 rounded-full blur-[120px]"></div>
+
+        <div class="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-indigo-50/60 rounded-full blur-[120px]"></div>
+
+    </div>
+
+
+
+    <!-- Navigation (Fixed Centering) -->
+
+    <!-- Changed: Removed 'left-1/2 -translate-x-1/2' and used 'w-full flex justify-center' to avoid transform conflict -->
+
+    <nav class="fixed top-6 inset-x-0 z-50 flex justify-center pointer-events-none">
+
+        <div class="pointer-events-auto reveal-scale active flex items-center gap-1 p-1.5 pl-3 md:pl-4 pr-1.5 bg-white/80 backdrop-blur-xl border border-zinc-200/50 rounded-full shadow-xl shadow-zinc-200/40 ring-1 ring-white/50 max-w-[95vw] overflow-x-auto">
+
+            <!-- Logo -->
+
+            <div class="flex items-center gap-2 mr-2 md:mr-6 flex-shrink-0">
+
+                <img src="logo.png" alt="AMPLIFY" class="h-5 md:h-6 w-auto">
+
+            </div>
+
+            
+
+            <!-- Links -->
+
+            <div class="flex items-center gap-1 flex-shrink-0">
+
+                <a href="#features" class="hover:text-zinc-900 transition-colors hover:bg-zinc-50 text-[10px] sm:text-xs font-medium text-zinc-500 rounded-full py-1.5 px-2 sm:px-3 whitespace-nowrap">Benefits</a>
+
+                <a href="#how-it-works" class="hover:text-zinc-900 transition-colors hover:bg-zinc-50 text-[10px] sm:text-xs font-medium text-zinc-500 rounded-full py-1.5 px-2 sm:px-3 whitespace-nowrap">How it Works</a>
+
+                <a href="#earnings" class="hover:text-zinc-900 transition-colors hover:bg-zinc-50 text-[10px] sm:text-xs font-medium text-zinc-500 rounded-full py-1.5 px-2 sm:px-3 whitespace-nowrap">Earn Model</a>
+
+            </div>
+
+
+
+            <!-- Social Icons Dropdown -->
+
+            <div class="ml-2 relative" id="socialDropdown">
+
+                <button id="socialToggle" class="p-2 rounded-lg hover:bg-zinc-100 transition-colors text-zinc-600 hover:text-zinc-900" aria-label="Social Media">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="19" cy="12" r="1"></circle>
+                        <circle cx="5" cy="12" r="1"></circle>
+                    </svg>
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div id="socialMenu" class="hidden absolute right-0 top-full mt-2 bg-white rounded-xl border border-zinc-200/50 shadow-xl shadow-zinc-200/40 p-2 min-w-[160px] z-50">
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-zinc-50 transition-colors text-zinc-600 hover:text-zinc-900" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                        <span class="text-sm">LinkedIn</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-zinc-50 transition-colors text-zinc-600 hover:text-zinc-900" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                        <span class="text-sm">Facebook</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-zinc-50 transition-colors text-zinc-600 hover:text-zinc-900" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                        <span class="text-sm">Instagram</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-zinc-50 transition-colors text-zinc-600 hover:text-zinc-900" aria-label="YouTube">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                        <span class="text-sm">YouTube</span>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- Hero Section -->
+
+    <section class="min-h-[90vh] flex flex-col w-full pt-24 md:pt-20 px-4 sm:px-6 relative items-center justify-center">
+
+        <!-- Subtle Grid Background -->
+
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#00000005_1px,transparent_1px),linear-gradient(to_bottom,#00000005_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] -z-10"></div>
+
+
+
+        <div class="max-w-4xl w-full text-center space-y-8 relative z-10 reveal active">
+
+            <!-- Main Title -->
+
+            <h1 class="md:text-7xl lg:text-8xl leading-[0.95] text-5xl font-medium text-zinc-900 tracking-tight">
+
+                AMPLIFY <br>
+
+                YOUR <br>
+
+                <span class="text-zinc-400">WEALTH</span>
+
+            </h1>
+
+
+
+            <!-- Subtitle -->
+
+            <p class="md:text-xl leading-relaxed text-lg font-light text-zinc-500 max-w-lg mr-auto ml-auto">
+
+                The ultimate platform to discover high-performance trading software — and earn real commissions with total transparency.
+
+            </p>
+
+
+
+            <!-- Join Today Button -->
+
+            <div class="flex items-center justify-center pt-2 pb-2">
+
+                <button class="inline-flex items-center justify-center gap-2 rounded-xl bg-zinc-900 text-white px-6 py-3 text-sm font-medium hover:bg-emerald-600 hover:border-emerald-600 hover:-translate-y-0.5 transition-all duration-200 shadow-xl shadow-zinc-900/10 border border-zinc-800">
+
+                    Join Today
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- Floating Hero Visual (Holo Style) -->
+
+            <div class="mt-12 w-full max-w-5xl aspect-[16/8] relative rounded-3xl overflow-hidden border border-zinc-200/50 shadow-2xl shadow-emerald-900/5 group bg-zinc-100 reveal delay-200 active">
+
+                <!-- Video Placeholder Background -->
+                <div class="w-full h-full bg-zinc-200 flex items-center justify-center">
+                    <!-- Play Button -->
+                    <div class="absolute inset-0 flex items-center justify-center z-10">
+                        <div class="w-20 h-20 md:w-24 md:h-24 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors cursor-pointer">
+                            <svg class="w-8 h-8 md:w-10 md:h-10 text-zinc-900 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Controls Bar at Bottom -->
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 z-20">
+                    <div class="flex items-center gap-2 mb-2">
+                        <!-- Progress Bar -->
+                        <div class="flex-1 h-1 bg-white/30 rounded-full overflow-hidden">
+                            <div class="h-full bg-white w-0"></div>
+                        </div>
+                        <!-- Time -->
+                        <span class="text-white text-xs font-mono">0:00 / 0:00</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <!-- Play/Pause -->
+                            <button class="w-8 h-8 flex items-center justify-center text-white hover:text-zinc-300 transition-colors">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </button>
+                            <!-- Volume -->
+                            <button class="w-8 h-8 flex items-center justify-center text-white hover:text-zinc-300 transition-colors">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                                </svg>
+                            </button>
+                            <!-- Time Display -->
+                            <span class="text-white text-xs font-mono ml-2">0:00 / 0:00</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <!-- Settings -->
+                            <button class="w-8 h-8 flex items-center justify-center text-white hover:text-zinc-300 transition-colors">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.63-.07.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                                </svg>
+                            </button>
+                            <!-- Fullscreen -->
+                            <button class="w-8 h-8 flex items-center justify-center text-white hover:text-zinc-300 transition-colors">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v-2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Features Section -->
+
+    <section id="features" class="py-16 md:py-24 px-4 sm:px-6 bg-zinc-50/50">
+
+        <div class="max-w-6xl mx-auto">
+
+            <div class="text-center mb-16 reveal">
+
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-zinc-900 mb-4">Build a Trading Network That Pays You Back</h2>
+
+                <p class="text-zinc-500 max-w-xl mx-auto">Earn across multiple levels as your community grows. Track profits, manage referrals, and unlock earnings—all with one simple dashboard.</p>
+
+            </div>
+
+
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+
+                <!-- Card 1 -->
+
+                <div class="relative group reveal-scale delay-100">
+
+                    <div class="glass rounded-2xl overflow-hidden relative" style="background: linear-gradient(rgba(255, 255, 255, 0.1), transparent); border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: rgba(0, 0, 0, 0.1) 0px 25px 25px; backdrop-filter: blur(10px); min-height: 400px;">
+
+                        <div class="absolute inset-4 rounded-xl bg-white text-neutral-900 shadow-2xl ring-1 ring-neutral-200 overflow-hidden flex flex-col h-full">
+
+                            <!-- Content Section -->
+
+                            <div class="p-6 flex flex-col items-center text-center">
+
+                                <h3 class="text-lg font-semibold text-zinc-900 mb-1 tracking-tight">Access</h3>
+
+                                <p class="text-sm text-zinc-500">Winning Automated Trading Strategies</p>
+
+                            </div>
+
+                            <!-- Scrolling Transaction Feed -->
+
+                            <div class="aspect-[4/3] bg-zinc-50 relative overflow-hidden">
+
+                                <div class="scroll-container h-full flex flex-col">
+
+                                <!-- First set of transactions -->
+
+                                <div class="flex-shrink-0 p-4 space-y-3">
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900 font-medium">Deposit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+$20,000</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 11 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.75%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 13 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+1.20%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900 font-medium">Withdrawal</span>
+
+                                        <span class="text-sm font-semibold text-rose-600">-$200</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 15 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.45%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 16 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.32%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900 font-medium">Withdrawal</span>
+
+                                        <span class="text-sm font-semibold text-rose-600">-$150</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 18 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.88%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 19 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.56%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 20 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.42%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900 font-medium">Withdrawal</span>
+
+                                        <span class="text-sm font-semibold text-rose-600">-$300</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 22 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.67%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 23 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.51%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 24 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.38%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900 font-medium">Withdrawal</span>
+
+                                        <span class="text-sm font-semibold text-rose-600">-$125</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 25 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.63%</span>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- Duplicate set for seamless loop -->
+
+                                <div class="flex-shrink-0 p-4 space-y-3">
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900 font-medium">Deposit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+$20,000</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 11 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.75%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 13 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+1.20%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900 font-medium">Withdrawal</span>
+
+                                        <span class="text-sm font-semibold text-rose-600">-$200</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 15 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.45%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 16 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.32%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900 font-medium">Withdrawal</span>
+
+                                        <span class="text-sm font-semibold text-rose-600">-$150</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 18 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.88%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 19 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.56%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 20 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.42%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900 font-medium">Withdrawal</span>
+
+                                        <span class="text-sm font-semibold text-rose-600">-$300</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 22 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.67%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 23 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.51%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 24 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.38%</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900 font-medium">Withdrawal</span>
+
+                                        <span class="text-sm font-semibold text-rose-600">-$125</span>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <span class="text-sm text-zinc-900">Jan 25 Profit</span>
+
+                                        <span class="text-sm font-semibold text-emerald-600">+0.63%</span>
+
+                                    </div>
+
+                                </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Icon below content -->
+                            <div class="flex justify-center pt-4 pb-6">
+                                <animated-icons
+                                    src="https://animatedicons.co/get-icon?name=unlock&style=minimalistic&token=97ae0ebf-896b-47c4-9538-d143a34f7b43"
+                                    trigger="click"
+                                    attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1,"defaultColours":{"group-1":"#000000FF","group-2":"#25C36BFF","background":"#FFFFFF"}}'
+                                    height="40"
+                                    width="40"
+                                    style="width: 40px; height: 40px;"
+                                ></animated-icons>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Card 2 -->
+
+                <div class="relative group reveal-scale delay-200">
+
+                    <div class="glass rounded-2xl overflow-hidden relative" style="background: linear-gradient(rgba(255, 255, 255, 0.08), transparent); border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: rgba(0, 0, 0, 0.1) 0px 25px 25px; backdrop-filter: blur(10px); min-height: 400px;">
+
+                        <div class="absolute inset-4 rounded-xl bg-white/90 text-neutral-900 shadow-xl ring-1 ring-neutral-200 backdrop-blur overflow-hidden flex flex-col h-full">
+
+                            <!-- Content Section -->
+
+                            <div class="p-6 flex flex-col items-center text-center">
+
+                                <h3 class="text-lg font-semibold text-zinc-900 mb-1 tracking-tight">Grow</h3>
+
+                                <p class="text-sm text-zinc-500">Expand & Win with Your Network</p>
+
+                            </div>
+
+                            <!-- Scrolling Network Feed -->
+
+                            <div class="aspect-[4/3] bg-zinc-50 relative overflow-hidden">
+
+                                <div class="scroll-container h-full flex flex-col">
+
+                                <!-- First set of network members -->
+
+                                <div class="flex-shrink-0 p-4 space-y-3">
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>JD</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">James Davis</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 1</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>SM</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Sarah Martinez</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 2</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>RW</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Robert Wilson</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 1</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>ET</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Emily Thompson</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 3</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>MC</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Michael Chen</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 2</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-fuchsia-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>AL</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Amanda Lee</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 1</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>DB</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">David Brown</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 3</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>JG</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Jessica Garcia</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 2</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-blue-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>RK</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Ryan Kim</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 1</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>LT</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Lisa Taylor</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 3</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>CM</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Chris Moore</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 2</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>KW</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Kevin White</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 1</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- Duplicate set for seamless loop -->
+
+                                <div class="flex-shrink-0 p-4 space-y-3">
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>JD</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">James Davis</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 1</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>SM</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Sarah Martinez</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 2</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>RW</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Robert Wilson</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 1</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>ET</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Emily Thompson</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 3</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>MC</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Michael Chen</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 2</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-fuchsia-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>AL</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Amanda Lee</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 1</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>DB</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">David Brown</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 3</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>JG</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Jessica Garcia</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 2</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-blue-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>RK</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Ryan Kim</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 1</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>LT</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Lisa Taylor</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 3</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>CM</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Chris Moore</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 2</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center text-white text-xs font-semibold">
+
+                                            <span>KW</span>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Kevin White</span>
+
+                                            <span class="text-xs text-indigo-600 font-medium">LVL 1</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Icon below content -->
+                            <div class="flex justify-center pt-4 pb-6">
+                                <animated-icons
+                                    src="https://animatedicons.co/get-icon?name=Team&style=minimalistic&token=9c840f28-8274-4ee6-b5b3-7707bde20ce4"
+                                    trigger="click"
+                                    attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1,"defaultColours":{"group-1":"#000000FF","group-2":"#25C36BFF","background":"#FFFFFF"}}'
+                                    height="40"
+                                    width="40"
+                                    style="width: 40px; height: 40px;"
+                                ></animated-icons>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Card 3 -->
+
+                <div class="relative group reveal-scale delay-300">
+
+                    <div class="glass rounded-2xl overflow-hidden relative" style="background: linear-gradient(rgba(255, 255, 255, 0.06), transparent); border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: rgba(0, 0, 0, 0.1) 0px 25px 25px; backdrop-filter: blur(10px); min-height: 400px;">
+
+                        <div class="absolute inset-4 rounded-xl bg-white/80 text-neutral-900 shadow-lg ring-1 ring-neutral-200 backdrop-blur overflow-hidden flex flex-col h-full">
+
+                            <!-- Content Section -->
+
+                            <div class="p-6 flex flex-col items-center text-center">
+
+                                <h3 class="text-lg font-semibold text-zinc-900 mb-1 tracking-tight">Earn</h3>
+
+                                <p class="text-sm text-zinc-500">Earn on 3 Levels per Referral</p>
+
+                            </div>
+
+                            <!-- Scrolling Payout Feed -->
+
+                            <div class="aspect-[4/3] bg-zinc-50 relative overflow-hidden">
+
+                                <div class="scroll-container h-full flex flex-col">
+
+                                <!-- First set of transactions -->
+
+                                <div class="flex-shrink-0 p-4 space-y-3">
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 1 Payout $300</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 2 Payout $100</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-rose-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Withdrawal $450</span>
+
+                                            <span class="text-xs text-rose-600">Withdrawal</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 3 Payout $50</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-violet-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Boost +5% $250</span>
+
+                                            <span class="text-xs text-violet-600">Trading account credit</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 1 Payout $300</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 2 Payout $100</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-rose-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Withdrawal $200</span>
+
+                                            <span class="text-xs text-rose-600">Withdrawal</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-violet-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Boost +3% $180</span>
+
+                                            <span class="text-xs text-violet-600">Trading account credit</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 3 Payout $50</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 1 Payout $300</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 2 Payout $100</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-rose-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Withdrawal $350</span>
+
+                                            <span class="text-xs text-rose-600">Withdrawal</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- Duplicate set for seamless loop -->
+
+                                <div class="flex-shrink-0 p-4 space-y-3">
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 1 Payout $300</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 2 Payout $100</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-rose-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Withdrawal $450</span>
+
+                                            <span class="text-xs text-rose-600">Withdrawal</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 3 Payout $50</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-violet-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Boost +5% $250</span>
+
+                                            <span class="text-xs text-violet-600">Trading account credit</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 1 Payout $300</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 2 Payout $100</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-rose-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Withdrawal $200</span>
+
+                                            <span class="text-xs text-rose-600">Withdrawal</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-violet-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Boost +3% $180</span>
+
+                                            <span class="text-xs text-violet-600">Trading account credit</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 3 Payout $50</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 1 Payout $300</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">LVL 2 Payout $100</span>
+
+                                            <span class="text-xs text-emerald-600">Credited</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="flex items-center justify-between py-2 border-b border-zinc-200">
+
+                                        <div class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-rose-600">
+
+                                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div class="flex flex-col items-end">
+
+                                            <span class="text-sm text-zinc-900 font-medium">Withdrawal $350</span>
+
+                                            <span class="text-xs text-rose-600">Withdrawal</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Icon below content -->
+                            <div class="flex justify-center pt-4 pb-6">
+                                <animated-icons
+                                    src="https://animatedicons.co/get-icon?name=Down%20Payment&style=minimalistic&token=2128adf1-0a3d-4376-95fe-170b89ba4c2a"
+                                    trigger="click"
+                                    attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1,"defaultColours":{"group-1":"#000000FF","group-2":"#25C36BFF","background":"#FFFFFF"}}'
+                                    height="48"
+                                    width="48"
+                                    style="width: 48px; height: 48px;"
+                                ></animated-icons>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- How It Works (Timeline Section) -->
+
+    <section id="how-it-works" class="max-w-6xl mx-auto pt-16 md:pt-32 pb-16 md:pb-32 px-4 sm:px-6 relative">
+
+        <div class="mb-24 text-center reveal">
+
+            <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-zinc-900 mb-4">Unlock Unlimited Earning Potential</h2>
+
+            <p class="text-zinc-500 max-w-xl mx-auto">A transparent way to earn from your network — powered by real people, real value.</p>
+
+        </div>
+
+
+
+        <div class="relative">
+
+            <!-- Continuous Vertical Line -->
+
+            <div class="absolute left-0 md:left-[50%] top-0 bottom-0 w-[1px] timeline-gradient hidden md:block opacity-30"></div>
+
+            
+
+            <!-- Step 01 -->
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center mb-32 relative">
+
+                <!-- Text Content -->
+
+                <div class="relative pl-8 md:pl-12 reveal">
+
+                     <!-- Mobile Line -->
+
+                    <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-emerald-400 md:hidden"></div>
+
+                    
+
+                    <h3 class="text-2xl font-medium text-zinc-900 mb-3 tracking-tight">How it Works</h3>
+
+                    <!-- Flow Badge -->
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-50/50 text-emerald-700 text-xs font-medium tracking-wider mb-4">
+                        <span>Join</span>
+                        <span class="text-emerald-400">-</span>
+                        <span>Network</span>
+                        <span class="text-emerald-400">-</span>
+                        <span>Earn</span>
+                    </div>
+
+                    <!-- List 1 -->
+                    <div class="mb-6">
+                        <h4 class="text-sm font-semibold text-zinc-900 mb-3">Join Amplify & Access</h4>
+                        <ul class="space-y-2 text-zinc-500 text-sm">
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6L9 17l-5-5"></path>
+                                </svg>
+                                <span>Institutional Grade Automated Trading Strategies</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6L9 17l-5-5"></path>
+                                </svg>
+                                <span>3-Tier Affiliate Program Scaling Model</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6L9 17l-5-5"></path>
+                                </svg>
+                                <span>In-House App / Network Hub</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- List 2 -->
+                    <div>
+                        <h4 class="text-sm font-semibold text-zinc-900 mb-3">3-Tier Referral Earnings Model</h4>
+                        <ul class="space-y-2 text-zinc-500 text-sm">
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6L9 17l-5-5"></path>
+                                </svg>
+                                <span>Earn $300 for every direct referral (LVL 1)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6L9 17l-5-5"></path>
+                                </svg>
+                                <span>Earn additional payouts from your referral's referrals (LVL 2)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                    <path d="M20 6L9 17l-5-5"></path>
+                                </svg>
+                                <span>Earn from the next layer of their network (LVL 3)</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- Visual Content - Calculator -->
+
+                <div class="relative group reveal-scale delay-200">
+
+                    <div class="glass rounded-2xl overflow-hidden relative" style="background: linear-gradient(rgba(255, 255, 255, 0.1), transparent); border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: rgba(0, 0, 0, 0.1) 0px 25px 25px; backdrop-filter: blur(10px); padding: 1rem;">
+
+                        <div class="rounded-xl bg-white text-neutral-900 shadow-2xl ring-1 ring-neutral-200 overflow-hidden p-6 md:p-8">
+
+                        <!-- Calculator Title -->
+                        <div class="mb-6">
+                            <h4 class="text-xl font-semibold text-zinc-900 mb-2 tracking-tight">Referral Earnings Calculator</h4>
+                            <p class="text-sm text-zinc-500 mb-2">See what your network could earn across 3 levels.</p>
+                            <p class="text-xs text-zinc-400 italic">Level 2 and 3 totals are calculated from your Level 1 referrals. Each person in your network can refer others, creating exponential growth.</p>
+                        </div>
+
+                        <!-- Input Section -->
+                        <div class="space-y-5 mb-6">
+                            <!-- Level 1 Input -->
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <label for="level1" class="text-sm font-medium text-zinc-900">Direct Referrals (Level 1)</label>
+                                    <input 
+                                        type="number" 
+                                        id="level1" 
+                                        min="0" 
+                                        value="0" 
+                                        class="w-24 px-3 py-1.5 text-sm border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-zinc-900 bg-white"
+                                    >
+                                </div>
+                                <p class="text-xs text-zinc-400">$300 per direct referral</p>
+                            </div>
+
+                            <!-- Level 2 Input -->
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <label for="level2" class="text-sm font-medium text-zinc-900">Avg referrals per Level 1 person</label>
+                                    <input 
+                                        type="number" 
+                                        id="level2" 
+                                        min="0" 
+                                        value="0" 
+                                        class="w-24 px-3 py-1.5 text-sm border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-zinc-900 bg-white"
+                                    >
+                                </div>
+                                <p class="text-xs text-zinc-400">Level 2 total: <span id="level2Total" class="font-medium text-zinc-600">0</span> people × $100 = <span id="level2Preview" class="font-medium text-emerald-600">$0</span></p>
+                            </div>
+
+                            <!-- Level 3 Input -->
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <label for="level3" class="text-sm font-medium text-zinc-900">Avg referrals per Level 2 person</label>
+                                    <input 
+                                        type="number" 
+                                        id="level3" 
+                                        min="0" 
+                                        value="0" 
+                                        class="w-24 px-3 py-1.5 text-sm border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-zinc-900 bg-white"
+                                    >
+                                </div>
+                                <p class="text-xs text-zinc-400">Level 3 total: <span id="level3Total" class="font-medium text-zinc-600">0</span> people × $50 = <span id="level3Preview" class="font-medium text-emerald-600">$0</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Results Section -->
+                        <div class="pt-6 border-t border-zinc-100 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-zinc-500">Level 1 Earnings</span>
+                                <span class="text-sm font-medium text-zinc-900" id="earnings1">$0</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-zinc-500">Level 2 Earnings</span>
+                                <span class="text-sm font-medium text-zinc-900" id="earnings2">$0</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-zinc-500">Level 3 Earnings</span>
+                                <span class="text-sm font-medium text-zinc-900" id="earnings3">$0</span>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 mt-3 border-t border-zinc-200">
+                                <span class="text-base font-semibold text-zinc-900">Total Earnings</span>
+                                <span class="text-lg font-bold text-emerald-600" id="totalEarnings">$0</span>
+                            </div>
+                        </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Step 02 -->
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center mb-32 relative">
+
+                <!-- Visual Content (Left on Desktop) - Video Placeholder -->
+
+                <div class="relative group order-2 md:order-1 reveal-scale">
+
+                    <div class="glass rounded-2xl overflow-hidden relative w-full max-w-sm mx-auto aspect-[4/3]" style="background: linear-gradient(rgba(255, 255, 255, 0.1), transparent); border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: rgba(0, 0, 0, 0.1) 0px 25px 25px; backdrop-filter: blur(10px);">
+
+                        <div class="absolute inset-4 rounded-xl bg-white text-neutral-900 shadow-2xl ring-1 ring-neutral-200 overflow-hidden h-full">
+
+                            <!-- Video Placeholder Background -->
+                            <div class="w-full h-full bg-zinc-200 flex items-center justify-center">
+                                <!-- Play Button -->
+                                <div class="absolute inset-0 flex items-center justify-center z-10">
+                                    <div class="w-16 h-16 md:w-20 md:h-20 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors cursor-pointer">
+                                        <svg class="w-6 h-6 md:w-8 md:h-8 text-zinc-900 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Video Controls Bar at Bottom -->
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 z-20">
+                                <div class="flex items-center gap-1.5 mb-1.5">
+                                    <!-- Progress Bar -->
+                                    <div class="flex-1 h-0.5 bg-white/30 rounded-full overflow-hidden">
+                                        <div class="h-full bg-white w-0"></div>
+                                    </div>
+                                    <!-- Time -->
+                                    <span class="text-white text-[10px] font-mono">0:00 / 0:00</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-1.5">
+                                        <!-- Play/Pause -->
+                                        <button class="w-6 h-6 flex items-center justify-center text-white hover:text-zinc-300 transition-colors">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M8 5v14l11-7z"/>
+                                            </svg>
+                                        </button>
+                                        <!-- Volume -->
+                                        <button class="w-6 h-6 flex items-center justify-center text-white hover:text-zinc-300 transition-colors">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                                            </svg>
+                                        </button>
+                                        <!-- Time Display -->
+                                        <span class="text-white text-[10px] font-mono ml-1">0:00 / 0:00</span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5">
+                                        <!-- Settings -->
+                                        <button class="w-6 h-6 flex items-center justify-center text-white hover:text-zinc-300 transition-colors">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.63-.07.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                                            </svg>
+                                        </button>
+                                        <!-- Fullscreen -->
+                                        <button class="w-6 h-6 flex items-center justify-center text-white hover:text-zinc-300 transition-colors">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v-2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Text Content -->
+
+                <div class="relative pl-8 md:pl-12 order-1 md:order-2 reveal delay-200">
+
+                    <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-indigo-400 md:hidden"></div>
+
+                    <span class="text-5xl font-medium text-indigo-500/20 absolute -top-12 left-8 md:left-12">01</span>
+
+                    <h3 class="text-2xl font-medium text-zinc-900 mb-3 tracking-tight">Join</h3>
+
+                    <ul class="space-y-2 text-zinc-500 text-sm">
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                            <span>Get immediate access to our trading ecosystem and member dashboard</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                            <span>Receive your personalized referral link and onboarding resources.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                            <span>Start building your foundation for long-term earning potential.</span>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Step 03 -->
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center mb-32 relative">
+
+                <!-- Text Content -->
+
+                <div class="relative pl-8 md:pl-12 reveal">
+
+                    <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-violet-400 md:hidden"></div>
+
+                    <span class="text-5xl font-medium text-violet-500/20 absolute -top-12 left-8 md:left-12">02</span>
+
+                    <h3 class="text-2xl font-medium text-zinc-900 mb-3 tracking-tight">Network</h3>
+
+                    <ul class="space-y-2 text-zinc-500 text-sm">
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                            <span>Share your referral link and bring new members into the ecosystem.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                            <span>Watch your network expand as your referrals invite others.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                            <span>Build a deep 3-Tier payout structure that works for you 24/7.</span>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <!-- Visual Content -->
+
+                <div class="relative group reveal-scale delay-200">
+
+                    <div class="glass rounded-2xl overflow-hidden relative" style="background: linear-gradient(rgba(255, 255, 255, 0.08), transparent); border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: rgba(0, 0, 0, 0.1) 0px 25px 25px; backdrop-filter: blur(10px); padding: 1rem;">
+
+                        <div class="relative rounded-xl bg-white/90 text-neutral-900 shadow-xl ring-1 ring-neutral-200 backdrop-blur overflow-hidden flex flex-col p-6 gap-4">
+
+                            <div class="flex items-center justify-between">
+
+                                <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Active Profile</span>
+
+                                <div class="relative w-10 h-6 bg-violet-500 rounded-full transition-colors cursor-pointer">
+
+                                    <div class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full shadow-sm"></div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="flex items-center gap-4 p-3 bg-zinc-50 rounded-xl border border-zinc-100">
+
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-200 to-orange-300 flex items-center justify-center text-white font-bold text-xs shadow-inner">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+
+                                </div>
+
+                                <div>
+
+                                    <h4 class="text-sm font-semibold text-emerald-600">+$35,000</h4>
+
+                                    <p class="text-[10px] text-zinc-500">Total Payouts</p>
+
+                                </div>
+
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-2">
+
+                                 <div class="h-16 rounded-lg bg-zinc-100 border border-zinc-200 flex flex-col items-center justify-center relative group-hover:scale-105 transition-transform">
+                                    <span class="font-bold text-xs text-zinc-900">LVL 1</span>
+                                    <span class="text-[10px] text-zinc-500">Referrals</span>
+                                    <span class="text-lg font-semibold text-emerald-600">10</span>
+                                 </div>
+
+                                 <div class="h-16 rounded-lg bg-zinc-100 border border-zinc-200 flex flex-col items-center justify-center relative group-hover:scale-105 transition-transform delay-75">
+                                    <span class="font-bold text-xs text-zinc-900">LVL 2</span>
+                                    <span class="text-[10px] text-zinc-500">Referrals</span>
+                                    <span class="text-lg font-semibold text-emerald-600">8</span>
+                                 </div>
+
+                                 <div class="h-16 rounded-lg bg-zinc-100 border border-zinc-200 flex flex-col items-center justify-center relative group-hover:scale-105 transition-transform delay-150">
+                                    <span class="font-bold text-xs text-zinc-900">LVL 3</span>
+                                    <span class="text-[10px] text-zinc-500">Referrals</span>
+                                    <span class="text-lg font-semibold text-emerald-600">6</span>
+                                 </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Step 04 -->
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 relative items-center">
+
+                 <!-- Visual Content (Left on Desktop) -->
+
+                 <div class="group order-2 md:order-1 relative reveal-scale">
+
+                    <div class="glass rounded-2xl overflow-hidden relative" style="background: linear-gradient(rgba(255, 255, 255, 0.1), transparent); border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: rgba(0, 0, 0, 0.1) 0px 25px 25px; backdrop-filter: blur(10px); padding: 1rem;">
+
+                        <div class="relative rounded-xl overflow-hidden shadow-zinc-900/10 bg-zinc-900 h-64 pt-1 pr-1 pb-1 pl-1 shadow-xl">
+
+                         <!-- Map Pattern -->
+
+                        <div class="overflow-hidden flex bg-[#1c1c1c] w-full h-full rounded-xl relative items-center justify-center">
+
+                             <!-- Grid Lines -->
+
+                             <div class="overflow-hidden w-full h-full absolute top-0 right-0 bottom-0 left-0">
+
+    <!-- Map Texture Background -->
+
+    <div class="absolute inset-0 opacity-30 mix-blend-screen">
+
+        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&amp;w=1000&amp;auto=format&amp;fit=crop" class="w-full h-full object-cover grayscale contrast-125 scale-110" alt="Map of Spain Coast">
+
+    </div>
+
+    
+
+    <!-- Gradient Overlay for Depth -->
+
+    <div class="absolute inset-0 bg-gradient-to-b from-[#1c1c1c]/80 via-transparent to-[#1c1c1c]/90"></div>
+
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#1c1c1c_100%)]"></div>
+
+
+
+    <!-- Decorative Map Elements -->
+
+    <div class="overflow-hidden bg-sky-50 rounded-xl absolute top-0 right-0 bottom-0 left-0">
+
+    <!-- Map Grid Pattern -->
+
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none rounded-xl">
+
+    <!-- Darkening base for contrast -->
+
+    <div class="absolute inset-0 bg-zinc-900/20 mix-blend-multiply"></div>
+
+    
+
+    <!-- Holographic Grid Pattern -->
+
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.1)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)] opacity-70"></div>
+
+
+
+    <!-- Rotating Radar Sweep -->
+
+    <div class="absolute inset-[-50%] bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0deg,transparent_300deg,rgba(16,185,129,0.1)_360deg)] animate-[spin_5s_linear_infinite]"></div>
+
+
+
+    <!-- Central Tactical Reticle -->
+
+    <div class="absolute inset-0 flex items-center justify-center opacity-40">
+
+        <div class="w-[70%] h-[70%] border border-emerald-500/20 rounded-full animate-pulse"></div>
+
+        <div class="w-[50%] h-[50%] border border-dashed border-emerald-500/20 rounded-full"></div>
+
+        <div class="w-[30%] h-[30%] border border-emerald-500/20 rounded-full"></div>
+
+        <!-- Crosshairs -->
+
+        <div class="absolute w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent"></div>
+
+        <div class="absolute h-full w-[1px] bg-gradient-to-b from-transparent via-emerald-500/20 to-transparent"></div>
+
+    </div>
+
+    
+
+    <!-- HUD Corner Elements -->
+
+    <div class="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-emerald-500/30 rounded-tl-sm"></div>
+
+    <div class="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-emerald-500/30 rounded-tr-sm"></div>
+
+    <div class="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-emerald-500/30 rounded-bl-sm"></div>
+
+    <div class="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-emerald-500/30 rounded-br-sm"></div>
+
+    
+
+    <!-- Active Status Indicator -->
+
+    <div class="absolute top-4 right-8 flex items-center gap-2">
+
+        <div class="w-1 h-1 bg-emerald-500 rounded-full animate-ping"></div>
+
+        <span class="text-[8px] font-mono font-bold text-emerald-500/80 tracking-widest uppercase">Signal Active</span>
+
+    </div>
+
+</div>
+
+    
+
+    <!-- Spain & Islands Silhouette (Light Mode) -->
+
+    <svg class="absolute inset-0 w-full h-full pointer-events-none drop-shadow-sm" viewBox="0 0 400 200" preserveAspectRatio="none">
+
+        <!-- Iberian Peninsula (Abstract) -->
+
+        <path d="M -20 -20 L 280 -20 L 260 80 Q 240 140 140 150 Q 80 155 40 180 L -20 180 Z" fill="white" stroke="#e2e8f0" stroke-width="2"></path>
+
+        
+
+        <!-- Balearic Islands -->
+
+        <g fill="white" stroke="#e2e8f0" stroke-width="2">
+
+            <!-- Mallorca -->
+
+            <path d="M 310 80 Q 330 70 340 90 Q 330 110 310 100 Z"></path>
+
+            <!-- Ibiza -->
+
+            <circle cx="290" cy="120" r="8"></circle>
+
+            <!-- Menorca -->
+
+            <circle cx="360" cy="75" r="6"></circle>
+
+        </g>
+
+    </svg>
+
+
+
+    <!-- Connection Line (Dotted) -->
+
+    <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 200">
+
+        <path d="M 140 150 Q 215 160 290 120" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 4" class="opacity-50"></path>
+
+    </svg>
+
+
+
+    <!-- Costa del Sol Marker -->
+
+    <div class="absolute top-[75%] left-[35%] group cursor-default">
+
+        <div class="relative flex items-center justify-center">
+
+            <div class="w-3 h-3 bg-orange-500 rounded-full shadow-[0_2px_8px_rgba(249,115,22,0.4)] ring-2 ring-white relative z-10 group-hover:scale-110 transition-transform duration-300"></div>
+
+            <div class="absolute w-8 h-8 bg-orange-500/10 rounded-full animate-pulse"></div>
+
+        </div>
+
+        <div class="absolute -top-8 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-100 transition-all group-hover:-translate-y-1">
+
+            <div class="px-2.5 py-1 bg-white rounded-lg shadow-lg shadow-zinc-200/50 border border-zinc-100 text-[10px] font-semibold text-zinc-700 whitespace-nowrap tracking-tight">
+
+                LVL 2 + 20%
+
+            </div>
+
+            <div class="w-2 h-2 bg-white rotate-45 -mt-1 border-r border-b border-zinc-100"></div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Ibiza Marker -->
+
+    <div class="absolute top-[60%] left-[72.5%] group cursor-default">
+
+        <div class="relative flex items-center justify-center">
+
+            <div class="w-3 h-3 bg-emerald-500 rounded-full shadow-[0_2px_8px_rgba(16,185,129,0.4)] ring-2 ring-white relative z-10 group-hover:scale-110 transition-transform duration-300"></div>
+
+            <div class="absolute w-8 h-8 bg-emerald-500/10 rounded-full"></div>
+
+        </div>
+
+        <div class="absolute -top-8 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-100 transition-all group-hover:-translate-y-1">
+
+            <div class="px-2.5 py-1 bg-white rounded-lg shadow-lg shadow-zinc-200/50 border border-zinc-100 text-[10px] font-semibold text-zinc-700 whitespace-nowrap tracking-tight">
+
+                LVL 1 + 60%
+
+            </div>
+
+            <div class="w-2 h-2 bg-white rotate-45 -mt-1 border-r border-b border-zinc-100"></div>
+
+        </div>
+
+    </div>
+
+    
+
+    <!-- LVL 3 Marker -->
+
+    <div class="absolute top-[45%] left-[20%] group cursor-default">
+
+        <div class="relative flex items-center justify-center">
+
+            <div class="w-3 h-3 bg-violet-500 rounded-full shadow-[0_2px_8px_rgba(139,92,246,0.4)] ring-2 ring-white relative z-10 group-hover:scale-110 transition-transform duration-300"></div>
+
+            <div class="absolute w-8 h-8 bg-violet-500/10 rounded-full"></div>
+
+        </div>
+
+        <div class="absolute -top-8 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-100 transition-all group-hover:-translate-y-1">
+
+            <div class="px-2.5 py-1 bg-white rounded-lg shadow-lg shadow-zinc-200/50 border border-zinc-100 text-[10px] font-semibold text-zinc-700 whitespace-nowrap tracking-tight">
+
+                LVL 3 + 10%
+
+            </div>
+
+            <div class="w-2 h-2 bg-white rotate-45 -mt-1 border-r border-b border-zinc-100"></div>
+
+        </div>
+
+    </div>
+
+    
+
+    <!-- Legend / Scale -->
+
+    <div class="absolute bottom-3 left-3 flex gap-3">
+
+        <div class="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/80 backdrop-blur-sm border border-zinc-200/50 shadow-sm">
+
+            <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+
+            <span class="text-[9px] font-medium text-zinc-500 uppercase tracking-wider">LVL 1 $300</span>
+
+        </div>
+
+        <div class="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/80 backdrop-blur-sm border border-zinc-200/50 shadow-sm">
+
+            <div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div>
+
+            <span class="text-[9px] font-medium text-zinc-500 uppercase tracking-wider">LVL 2 $100</span>
+
+        </div>
+
+        <div class="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/80 backdrop-blur-sm border border-zinc-200/50 shadow-sm">
+
+            <div class="w-1.5 h-1.5 rounded-full bg-violet-500"></div>
+
+            <span class="text-[9px] font-medium text-zinc-500 uppercase tracking-wider">LVL 3 $50</span>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+                             
+
+                             <!-- Pin -->
+
+                             <div class="relative z-10 flex flex-col items-center animate-bounce group cursor-default">
+
+                                 <div class="bg-orange-500 text-white p-2 rounded-full shadow-lg shadow-orange-500/30">
+
+                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="help-circle" class="lucide lucide-help-circle w-5 h-5"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+
+                                 </div>
+
+                                 <div class="w-2 h-2 bg-orange-500 rounded-full mt-1"></div>
+
+                                 <div class="absolute -top-8 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-100 transition-all group-hover:-translate-y-1">
+
+                                     <div class="px-2.5 py-1 bg-white rounded-lg shadow-lg shadow-zinc-200/50 border border-zinc-100 text-[10px] font-semibold text-zinc-700 whitespace-nowrap tracking-tight">
+
+                                         $500
+
+                                     </div>
+
+                                     <div class="w-2 h-2 bg-white rotate-45 -mt-1 border-r border-b border-zinc-100"></div>
+
+                                 </div>
+
+                             </div>
+
+
+
+                             <!-- UI Overlay -->
+
+                             <div class="flex gap-2 bg-white/10 border-white/10 border rounded-full pt-1 pr-3 pb-1 pl-3 absolute top-4 right-4 backdrop-blur gap-x-2 gap-y-2 items-center">
+
+                                <span class="text-[10px] text-zinc-400 font-mono">SCORE</span>
+
+                                <span class="text-xs text-white font-mono font-bold">1,240</span>
+
+                             </div>
+
+
+
+
+                        </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Text Content -->
+
+                <div class="relative pl-8 md:pl-12 order-1 md:order-2 reveal delay-200">
+
+                    <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-orange-400 md:hidden"></div>
+
+                    <span class="text-5xl font-medium text-orange-500/20 absolute -top-12 left-8 md:left-12">03</span>
+
+                    <h3 class="text-2xl font-medium text-zinc-900 mb-3 tracking-tight">Earn</h3>
+
+                    <ul class="space-y-2 text-zinc-500 text-sm">
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                            <span>Grow your account through our automated trading strategy with a $1,000 minimum deposit.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                            <span>Collect $300 on every direct referral, plus additional payouts on Levels 2 and 3.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 mr-2 mt-0.5 flex-shrink-0">
+                                <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                            <span>Scale your income as both your trading performance and your network expand.</span>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Data Section -->
+
+    <section class="py-16 md:py-24 border-t border-zinc-100 bg-zinc-50/50">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+
+            
+
+            <div class="space-y-8 reveal">
+
+                <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-zinc-900 leading-[1.1]">
+
+                    AMPLIFY FX <br>
+
+                    <span class="text-zinc-400">Trusted Ecosystem</span>
+
+                </h2>
+
+                <div class="space-y-6">
+
+                    <div class="flex gap-4 items-start group">
+
+                        <div class="p-2 rounded-lg bg-white border border-zinc-200 group-hover:bg-emerald-50 group-hover:border-emerald-200 transition-all shadow-sm flex items-center justify-center" style="min-width: 40px; min-height: 40px;">
+
+                            <animated-icons
+
+                              src="https://animatedicons.co/get-icon?name=Rpa&style=minimalistic&token=deb3f3dc-7e65-4d2a-a47e-e6447f4bab30"
+
+                              trigger="click"
+
+                              attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1,"defaultColours":{"group-1":"#25C36BFF","group-2":"#000000FF","background":"#FFFFFF"}}'
+
+                              height="32"
+
+                              width="32"
+
+                            ></animated-icons>
+
+                        </div>
+
+                        <div>
+
+                            <h4 class="text-zinc-900 font-medium mb-1 text-sm">Automated Trading Strategy</h4>
+
+                            <p class="text-xs text-zinc-500">Access a hands-free winning strategy designed to grow your account.</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="flex gap-4 items-start group">
+
+                        <div class="p-2 rounded-lg bg-white border border-zinc-200 group-hover:bg-indigo-50 group-hover:border-indigo-200 transition-all shadow-sm flex items-center justify-center" style="min-width: 40px; min-height: 40px;">
+
+                            <animated-icons
+
+                              src="https://animatedicons.co/get-icon?name=Affiliate&style=minimalistic&token=deb3f3dc-7e65-4d2a-a47e-e6447f4bab30"
+
+                              trigger="click"
+
+                              attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1,"defaultColours":{"group-1":"#000000FF","group-2":"#25C36BFF","background":"#FFFFFF"}}'
+
+                              height="32"
+
+                              width="32"
+
+                            ></animated-icons>
+
+                        </div>
+
+                        <div>
+
+                            <h4 class="text-zinc-900 font-medium mb-1 text-sm">Earn on 3 Levels</h4>
+
+                            <p class="text-xs text-zinc-500">Build your network and earn commissions from your direct and indirect referrals.</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="flex gap-4 items-start group">
+
+                        <div class="p-2 rounded-lg bg-white border border-zinc-200 group-hover:bg-violet-50 group-hover:border-violet-200 transition-all shadow-sm flex items-center justify-center" style="min-width: 40px; min-height: 40px;">
+
+                            <animated-icons
+
+                              src="https://animatedicons.co/get-icon?name=Withdraw&style=minimalistic&token=deb3f3dc-7e65-4d2a-a47e-e6447f4bab30"
+
+                              trigger="click"
+
+                              attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1,"defaultColours":{"group-1":"#25C36BFF","group-2":"#000000FF","background":"#FFFFFF"}}'
+
+                              height="32"
+
+                              width="32"
+
+                            ></animated-icons>
+
+                        </div>
+
+                        <div>
+
+                            <h4 class="text-zinc-900 font-medium mb-1 text-sm">Payouts & Bonus Credit</h4>
+
+                            <p class="text-xs text-zinc-500">Enjoy trusted withdrawals or boost your trading account with an a Promo Credit.</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Join Today Button -->
+                <div class="mt-8">
+                    <button class="inline-flex items-center justify-center gap-2 rounded-xl bg-zinc-900 text-white px-6 py-3 text-sm font-medium hover:bg-emerald-600 hover:border-emerald-600 hover:-translate-y-0.5 transition-all duration-200 shadow-xl shadow-zinc-900/10 border border-zinc-800">
+                        Join Today
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </button>
+                </div>
+
+            </div>
+
+
+
+            <!-- Phone Animation -->
+
+            <div class="relative reveal-scale delay-200">
+
+                <div class="aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/3] overflow-hidden rounded-3xl border border-zinc-200/50 shadow-xl shadow-zinc-200/20 bg-white">
+
+                    <iframe src="https://my.spline.design/hands3duicopycopy-Mfz99nDHITWMEC1ftp6TkNjI/" frameborder="0" allowfullscreen="" loading="lazy" class="border-none w-full h-full absolute top-0 right-0 bottom-0 left-0" data-container-bg="true"></iframe>
+
+                </div>
+
+                <div class="-bottom-3 sm:-bottom-4 -translate-x-1/2 flex flex-col sm:flex-row items-center gap-2 absolute left-1/2 shadow-sm">
+
+                    <!-- iOS -->
+                    <button class="group flex items-center gap-3 bg-zinc-900 text-white px-4 py-2.5 rounded-xl hover:bg-emerald-600 hover:border-emerald-600 hover:-translate-y-0.5 transition-all duration-200 shadow-xl shadow-zinc-900/10 border border-zinc-800">
+
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.388 15.344c.058 2.652 2.302 3.535 2.406 3.585-.02.062-0.375 1.282-1.234 2.535-0.744 1.084-1.516 2.162-2.73 2.185-1.196.02-1.583-.71-2.955-.71-1.373 0-1.805.69-2.934.735-1.176.046-2.072-1.18-2.825-2.268-1.536-2.215-2.71-6.26-1.134-9.006 0.783-1.36 2.185-2.22 3.708-2.243 1.157-.024 2.25.778 2.955.778 0.705 0 2.03-.96 3.424-.818 0.584.024 2.227.235 3.28 1.776-.083.05-1.96 1.14-1.96 3.448M15.42 5.025c.618-.75 1.035-1.794.92-2.836-0.89.036-1.97.596-2.61 1.343-.574.664-1.076 1.724-0.94 2.74 0.994.077 2.01-.497 2.63-1.247"></path></svg>
+
+                        <div class="flex flex-col items-start leading-none">
+
+                            <span class="text-[9px] text-zinc-400 font-medium">Download on the</span>
+
+                            <span class="text-xs font-semibold tracking-wide">App Store</span>
+
+                        </div>
+
+                    </button>
+
+                    <!-- Android -->
+                    <button class="group flex items-center gap-3 bg-zinc-900 text-white px-4 py-2.5 rounded-xl hover:bg-emerald-600 hover:border-emerald-600 hover:-translate-y-0.5 transition-all duration-200 shadow-xl shadow-zinc-900/10 border border-zinc-800">
+
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.609 1.814L13.792 12 3.61 22.186a1.14 1.14 0 0 1-1.61-1.01V2.824a1.14 1.14 0 0 1 1.61-1.01zm17.923 8.355l-4.14 2.37-2.686-2.687 2.686-2.686 4.14 2.37c1.32.756 1.32 2.633 0 3.39l-4.14 2.373zm-4.996-3.23l-3.27-3.27 7.032-4.02c.677-.388.756-1.354.142-1.84L14.417 5.75l2.12 1.19zM13.266 12.53l3.27 3.27-2.119 1.189-7.879 4.467c.614-.486.535-1.452-.142-1.84l7.032-4.02-2.162-1.226z"></path></svg>
+
+                        <div class="flex flex-col items-start leading-none">
+
+                            <span class="text-[9px] text-zinc-400 font-medium">Get it on</span>
+
+                            <span class="text-xs font-semibold tracking-wide">Google Play</span>
+
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- New Benefits Section -->
+
+    <section id="earnings" class="py-16 md:py-24 px-4 sm:px-6 bg-zinc-50/50">
+
+        <div class="max-w-6xl mx-auto">
+
+            <div class="text-center mb-16 reveal">
+
+                <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-zinc-900 mb-4">Earnings Model that Builds Trust</h2>
+
+                <p class="text-zinc-500 max-w-xl mx-auto">A simple 3-tier structure that rewards you for the network you build—no hype, no complexity.</p>
+
+            </div>
+
+
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+
+                <!-- Card 1 -->
+
+                <div class="relative group reveal-scale delay-100">
+
+                    <div class="glass rounded-2xl overflow-hidden relative" style="background: linear-gradient(rgba(255, 255, 255, 0.1), transparent); border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: rgba(0, 0, 0, 0.1) 0px 25px 25px; backdrop-filter: blur(10px); min-height: 400px;">
+
+                        <div class="absolute inset-4 rounded-xl bg-white text-neutral-900 shadow-2xl ring-1 ring-neutral-200 overflow-hidden flex flex-col h-full">
+
+                            <!-- Image/Icon Placeholder -->
+
+                            <div class="aspect-[4/3] bg-zinc-50 relative overflow-hidden flex items-center justify-center">
+
+                                <!-- Animated Icon -->
+
+                                <animated-icons
+
+                              src="https://animatedicons.co/get-icon?name=Person%20Arrives&style=minimalistic&token=c2fb15e5-be5d-42ed-942e-4afd68bdd979"
+
+                              trigger="click"
+
+                              attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1,"defaultColours":{"group-1":"#000000","group-2":"#25C36BFF","background":"#FFFFFF"}}'
+
+                              height="150"
+
+                              width="150"
+
+                                ></animated-icons>
+
+                            </div>
+
+                            <!-- Content Section -->
+
+                            <div class="p-6 flex flex-col items-center text-center">
+
+                            <!-- Tier Badge -->
+
+                            <div class="mb-2">
+
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border" style="background-color: rgba(37, 195, 107, 0.1); color: #25C36B; border-color: rgba(37, 195, 107, 0.3);">Tier 1</span>
+
+                            </div>
+
+                            <h3 class="text-lg font-semibold text-zinc-900 mb-2 tracking-tight">Earn on Direct Referrals</h3>
+
+                            <p class="text-sm text-zinc-500 mb-1 leading-relaxed">When someone joins using your link, you receive a fixed payout.</p>
+
+                            <p class="text-xs font-medium mb-3" style="background: linear-gradient(to right, #000000, #52525b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Straightforward. Immediate. High-value.</p>
+
+                            <div class="flex items-center gap-2 mt-2">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #25C36B;">
+
+                                    <path d="M20 6L9 17l-5-5"></path>
+
+                                </svg>
+
+                                <span class="text-lg font-bold text-zinc-900">$300</span>
+
+                            </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Card 2 -->
+
+                <div class="relative group reveal-scale delay-200">
+
+                    <div class="glass rounded-2xl overflow-hidden relative" style="background: linear-gradient(rgba(255, 255, 255, 0.08), transparent); border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: rgba(0, 0, 0, 0.1) 0px 25px 25px; backdrop-filter: blur(10px); min-height: 400px;">
+
+                        <div class="absolute inset-4 rounded-xl bg-white/90 text-neutral-900 shadow-xl ring-1 ring-neutral-200 backdrop-blur overflow-hidden flex flex-col h-full">
+
+                            <!-- Image/Icon Placeholder -->
+
+                            <div class="aspect-[4/3] bg-zinc-50 relative overflow-hidden flex items-center justify-center">
+
+                                <!-- Animated Icon -->
+
+                                <animated-icons
+
+                              src="https://animatedicons.co/get-icon?name=Dynamic%20Role&style=minimalistic&token=deb3f3dc-7e65-4d2a-a47e-e6447f4bab30"
+
+                              trigger="click"
+
+                              attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1,"defaultColours":{"group-1":"#25C36BFF","group-2":"#000000FF","background":"#FFFFFF"}}'
+
+                              height="150"
+
+                              width="150"
+
+                                ></animated-icons>
+
+                            </div>
+
+                            <!-- Content Section -->
+
+                            <div class="p-6 flex flex-col items-center text-center">
+
+                            <!-- Tier Badge -->
+
+                            <div class="mb-2">
+
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border" style="background-color: rgba(37, 195, 107, 0.1); color: #25C36B; border-color: rgba(37, 195, 107, 0.3);">Tier 2</span>
+
+                            </div>
+
+                            <h3 class="text-lg font-semibold text-zinc-900 mb-2 tracking-tight">Earn When Your Network Grows</h3>
+
+                            <p class="text-sm text-zinc-500 mb-1 leading-relaxed">When your referral brings in someone new, you automatically earn a reward.</p>
+
+                            <p class="text-xs font-medium mb-3" style="background: linear-gradient(to right, #000000, #52525b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Hands-off. Automatic. Passive income.</p>
+
+                            <div class="flex items-center gap-2 mt-2">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #25C36B;">
+
+                                    <path d="M20 6L9 17l-5-5"></path>
+
+                                </svg>
+
+                                <span class="text-lg font-bold text-zinc-900">$100</span>
+
+                            </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Card 3 -->
+
+                <div class="relative group reveal-scale delay-300">
+
+                    <div class="glass rounded-2xl overflow-hidden relative" style="background: linear-gradient(rgba(255, 255, 255, 0.06), transparent); border: 1px solid rgba(0, 0, 0, 0.05); box-shadow: rgba(0, 0, 0, 0.1) 0px 25px 25px; backdrop-filter: blur(10px); min-height: 400px;">
+
+                        <div class="absolute inset-4 rounded-xl bg-white/80 text-neutral-900 shadow-lg ring-1 ring-neutral-200 backdrop-blur overflow-hidden flex flex-col h-full">
+
+                            <!-- Image/Icon Placeholder -->
+
+                            <div class="aspect-[4/3] bg-zinc-50 relative overflow-hidden flex items-center justify-center">
+
+                                <!-- Animated Icon -->
+
+                                <animated-icons
+
+                              src="https://animatedicons.co/get-icon?name=Prices%20Continue%20To%20Rise&style=minimalistic&token=2df62946-b1ae-4b58-b632-08b0eeb19421"
+
+                              trigger="click"
+
+                              attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1,"defaultColours":{"group-1":"#000000","group-2":"#25C36BFF","background":"#FFFFFF"}}'
+
+                              height="150"
+
+                              width="150"
+
+                                ></animated-icons>
+
+                            </div>
+
+                            <!-- Content Section -->
+
+                            <div class="p-6 flex flex-col items-center text-center">
+
+                            <!-- Tier Badge -->
+
+                            <div class="mb-2">
+
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border" style="background-color: rgba(37, 195, 107, 0.1); color: #25C36B; border-color: rgba(37, 195, 107, 0.3);">Tier 3</span>
+
+                            </div>
+
+                            <h3 class="text-lg font-semibold text-zinc-900 mb-2 tracking-tight">Earn From Deeper Expansion</h3>
+
+                            <p class="text-sm text-zinc-500 mb-1 leading-relaxed">As your network expands, every new sign-up generates a compounding payout for you.</p>
+
+                            <p class="text-xs font-medium mb-3" style="background: linear-gradient(to right, #000000, #52525b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Compounding. Scalable. Sustainable growth.</p>
+
+                            <div class="flex items-center gap-2 mt-2">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #25C36B;">
+
+                                    <path d="M20 6L9 17l-5-5"></path>
+
+                                </svg>
+
+                                <span class="text-lg font-bold text-zinc-900">$50</span>
+
+                            </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Trusted Ecosystem Section (Inverted) -->
+
+    <section class="py-16 md:py-24 border-t border-zinc-100 bg-zinc-50/50">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+
+            <!-- Phone Animation (Left on Desktop) -->
+
+            <div class="relative reveal-scale delay-200 order-2 md:order-1">
+
+                <div class="aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/3] overflow-hidden rounded-3xl border border-zinc-200/50 shadow-xl shadow-zinc-200/20 bg-white">
+
+                    <iframe src="https://my.spline.design/hands3duicopycopy-Mfz99nDHITWMEC1ftp6TkNjI/" frameborder="0" allowfullscreen="" loading="lazy" class="border-none w-full h-full absolute top-0 right-0 bottom-0 left-0" data-container-bg="true"></iframe>
+
+                </div>
+
+                <div class="-bottom-3 sm:-bottom-4 -translate-x-1/2 flex flex-col sm:flex-row items-center gap-2 absolute left-1/2 shadow-sm">
+
+                    <!-- iOS -->
+                    <button class="group flex items-center gap-3 bg-zinc-900 text-white px-4 py-2.5 rounded-xl hover:bg-emerald-600 hover:border-emerald-600 hover:-translate-y-0.5 transition-all duration-200 shadow-xl shadow-zinc-900/10 border border-zinc-800">
+
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.388 15.344c.058 2.652 2.302 3.535 2.406 3.585-.02.062-0.375 1.282-1.234 2.535-0.744 1.084-1.516 2.162-2.73 2.185-1.196.02-1.583-.71-2.955-.71-1.373 0-1.805.69-2.934.735-1.176.046-2.072-1.18-2.825-2.268-1.536-2.215-2.71-6.26-1.134-9.006 0.783-1.36 2.185-2.22 3.708-2.243 1.157-.024 2.25.778 2.955.778 0.705 0 2.03-.96 3.424-.818 0.584.024 2.227.235 3.28 1.776-.083.05-1.96 1.14-1.96 3.448M15.42 5.025c.618-.75 1.035-1.794.92-2.836-0.89.036-1.97.596-2.61 1.343-.574.664-1.076 1.724-0.94 2.74 0.994.077 2.01-.497 2.63-1.247"></path></svg>
+
+                        <div class="flex flex-col items-start leading-none">
+
+                            <span class="text-[9px] text-zinc-400 font-medium">Download on the</span>
+
+                            <span class="text-xs font-semibold tracking-wide">App Store</span>
+
+                        </div>
+
+                    </button>
+
+                    <!-- Android -->
+                    <button class="group flex items-center gap-3 bg-zinc-900 text-white px-4 py-2.5 rounded-xl hover:bg-emerald-600 hover:border-emerald-600 hover:-translate-y-0.5 transition-all duration-200 shadow-xl shadow-zinc-900/10 border border-zinc-800">
+
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.609 1.814L13.792 12 3.61 22.186a1.14 1.14 0 0 1-1.61-1.01V2.824a1.14 1.14 0 0 1 1.61-1.01zm17.923 8.355l-4.14 2.37-2.686-2.687 2.686-2.686 4.14 2.37c1.32.756 1.32 2.633 0 3.39l-4.14 2.373zm-4.996-3.23l-3.27-3.27 7.032-4.02c.677-.388.756-1.354.142-1.84L14.417 5.75l2.12 1.19zM13.266 12.53l3.27 3.27-2.119 1.189-7.879 4.467c.614-.486.535-1.452-.142-1.84l7.032-4.02-2.162-1.226z"></path></svg>
+
+                        <div class="flex flex-col items-start leading-none">
+
+                            <span class="text-[9px] text-zinc-400 font-medium">Get it on</span>
+
+                            <span class="text-xs font-semibold tracking-wide">Google Play</span>
+
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            
+
+            <div class="space-y-8 reveal order-1 md:order-2">
+
+                <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-zinc-900 leading-[1.1]">
+
+                    Low Cost to Entry, <br>
+
+                    <span class="text-zinc-400">Conservative Risk</span>
+
+                </h2>
+
+                <div class="space-y-6">
+
+                    <div class="flex gap-4 items-start group">
+
+                        <div class="p-2 rounded-lg bg-white border border-zinc-200 group-hover:bg-emerald-50 group-hover:border-emerald-200 transition-all shadow-sm flex items-center justify-center" style="min-width: 40px; min-height: 40px;">
+
+                            <animated-icons
+
+                              src="https://animatedicons.co/get-icon?name=Rpa&style=minimalistic&token=deb3f3dc-7e65-4d2a-a47e-e6447f4bab30"
+
+                              trigger="click"
+
+                              attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1,"defaultColours":{"group-1":"#25C36BFF","group-2":"#000000FF","background":"#FFFFFF"}}'
+
+                              height="32"
+
+                              width="32"
+
+                            ></animated-icons>
+
+                        </div>
+
+                        <div>
+
+                            <h4 class="text-zinc-900 font-medium mb-1 text-sm">Automated Trading Strategy</h4>
+
+                            <p class="text-xs text-zinc-500">Access a hands-free winning strategy designed to grow your account.</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="flex gap-4 items-start group">
+
+                        <div class="p-2 rounded-lg bg-white border border-zinc-200 group-hover:bg-indigo-50 group-hover:border-indigo-200 transition-all shadow-sm flex items-center justify-center" style="min-width: 40px; min-height: 40px;">
+
+                            <animated-icons
+
+                              src="https://animatedicons.co/get-icon?name=Affiliate&style=minimalistic&token=deb3f3dc-7e65-4d2a-a47e-e6447f4bab30"
+
+                              trigger="click"
+
+                              attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1,"defaultColours":{"group-1":"#000000FF","group-2":"#25C36BFF","background":"#FFFFFF"}}'
+
+                              height="32"
+
+                              width="32"
+
+                            ></animated-icons>
+
+                        </div>
+
+                        <div>
+
+                            <h4 class="text-zinc-900 font-medium mb-1 text-sm">Earn on 3 Levels</h4>
+
+                            <p class="text-xs text-zinc-500">Build your network and earn commissions from your direct and indirect referrals.</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="flex gap-4 items-start group">
+
+                        <div class="p-2 rounded-lg bg-white border border-zinc-200 group-hover:bg-violet-50 group-hover:border-violet-200 transition-all shadow-sm flex items-center justify-center" style="min-width: 40px; min-height: 40px;">
+
+                            <animated-icons
+
+                              src="https://animatedicons.co/get-icon?name=Withdraw&style=minimalistic&token=deb3f3dc-7e65-4d2a-a47e-e6447f4bab30"
+
+                              trigger="click"
+
+                              attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1,"defaultColours":{"group-1":"#25C36BFF","group-2":"#000000FF","background":"#FFFFFF"}}'
+
+                              height="32"
+
+                              width="32"
+
+                            ></animated-icons>
+
+                        </div>
+
+                        <div>
+
+                            <h4 class="text-zinc-900 font-medium mb-1 text-sm">Payouts & Bonus Credit</h4>
+
+                            <p class="text-xs text-zinc-500">Enjoy trusted withdrawals or boost your trading account with an a Promo Credit.</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Join Today Button -->
+                <div class="mt-8">
+                    <button class="inline-flex items-center justify-center gap-2 rounded-xl bg-zinc-900 text-white px-6 py-3 text-sm font-medium hover:bg-emerald-600 hover:border-emerald-600 hover:-translate-y-0.5 transition-all duration-200 shadow-xl shadow-zinc-900/10 border border-zinc-800">
+                        Join Today
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Footer -->
+
+    <footer class="border-t border-zinc-200 bg-white pt-12 md:pt-20 pb-8 md:pb-12 px-4 sm:px-6">
+
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+
+            <div class="space-y-4">
+
+                <div class="flex items-center gap-2">
+
+                    <img src="logo2.png" alt="AMPLIFY" class="h-6 w-auto">
+
+                </div>
+
+                <p class="text-zinc-500 text-xs max-w-xs leading-relaxed">
+
+                    Redefining luxury real estate in Spain through design, AI, and gamification.
+
+                </p>
+
+            </div>
+
+            
+
+            <div class="flex gap-16">
+
+                <div class="flex flex-col gap-3">
+
+                    <span class="text-[10px] font-semibold text-zinc-900 uppercase tracking-wider">Platform</span>
+
+                    <a href="#" class="text-xs text-zinc-500 hover:text-zinc-900 transition-colors">Search</a>
+
+                    <a href="#" class="text-xs text-zinc-500 hover:text-zinc-900 transition-colors">Sell</a>
+
+                    <a href="#" class="text-xs text-zinc-500 hover:text-zinc-900 transition-colors">GeoGuesser</a>
+
+                </div>
+
+                <div class="flex flex-col gap-3">
+
+                    <span class="text-[10px] font-semibold text-zinc-900 uppercase tracking-wider">Company</span>
+
+                    <a href="#" class="text-xs text-zinc-500 hover:text-zinc-900 transition-colors">About</a>
+
+                    <a href="#" class="text-xs text-zinc-500 hover:text-zinc-900 transition-colors">Journal</a>
+
+                    <a href="#" class="text-xs text-zinc-500 hover:text-zinc-900 transition-colors">Contact</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-zinc-100 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-zinc-400">
+
+            <span>© 2024 Casa Estates. All rights reserved.</span>
+
+            <div class="flex gap-4">
+
+                <a href="#" class="hover:text-zinc-800">Privacy Policy</a>
+
+                <a href="#" class="hover:text-zinc-800">Terms of Service</a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- Mobile Floating Dock -->
+
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 md:hidden">
+
+         <div class="flex items-center gap-8 px-6 py-3 bg-white/90 backdrop-blur-xl border border-zinc-200/50 rounded-full shadow-2xl shadow-zinc-900/10">
+
+         </div>
+
+    </div>
+
+
+
+    <!-- Scroll Animation Observer -->
+
+    <script>
+
+        const observerOptions = {
+
+            root: null,
+
+            rootMargin: '0px',
+
+            threshold: 0.1
+
+        };
+
+
+
+        const observer = new IntersectionObserver((entries, observer) => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add('active');
+
+                }
+
+            });
+
+        }, observerOptions);
+
+
+
+        document.querySelectorAll('.reveal, .reveal-scale').forEach((el) => {
+
+            observer.observe(el);
+
+        });
+
+        lucide.createIcons();
+
+        // Affiliate Earnings Calculator
+        (function() {
+            // Fixed payout constants
+            const PAYOUT_LEVEL1 = 300;
+            const PAYOUT_LEVEL2 = 100;
+            const PAYOUT_LEVEL3 = 50;
+
+            // Get input elements
+            const level1Input = document.getElementById('level1');
+            const level2Input = document.getElementById('level2');
+            const level3Input = document.getElementById('level3');
+
+            // Get display elements
+            const earnings1Display = document.getElementById('earnings1');
+            const earnings2Display = document.getElementById('earnings2');
+            const earnings3Display = document.getElementById('earnings3');
+            const totalEarningsDisplay = document.getElementById('totalEarnings');
+            const level2TotalDisplay = document.getElementById('level2Total');
+            const level2PreviewDisplay = document.getElementById('level2Preview');
+            const level3TotalDisplay = document.getElementById('level3Total');
+            const level3PreviewDisplay = document.getElementById('level3Preview');
+
+            // Format number as USD currency
+            function formatCurrency(amount) {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(amount);
+            }
+
+            // Format number with commas
+            function formatNumber(num) {
+                return new Intl.NumberFormat('en-US').format(num);
+            }
+
+            // Calculate and update earnings
+            function calculateEarnings() {
+                // Get values, default to 0 if empty or invalid
+                const level1Count = parseInt(level1Input.value) || 0;
+                const level2Avg = parseInt(level2Input.value) || 0;
+                const level3Avg = parseInt(level3Input.value) || 0;
+
+                // Calculate Level 1 earnings (direct referrals)
+                const level1Earnings = level1Count * PAYOUT_LEVEL1;
+
+                // Calculate Level 2: Each Level 1 person gets X referrals
+                // Level 2 total people = Level 1 count × average referrals per Level 1 person
+                const level2TotalPeople = level1Count * level2Avg;
+                const level2Earnings = level2TotalPeople * PAYOUT_LEVEL2;
+
+                // Calculate Level 3: Each Level 2 person gets X referrals
+                // Level 3 total people = Level 2 total × average referrals per Level 2 person
+                const level3TotalPeople = level2TotalPeople * level3Avg;
+                const level3Earnings = level3TotalPeople * PAYOUT_LEVEL3;
+
+                // Calculate total
+                const totalEarnings = level1Earnings + level2Earnings + level3Earnings;
+
+                // Update preview displays
+                level2TotalDisplay.textContent = formatNumber(level2TotalPeople);
+                level2PreviewDisplay.textContent = formatCurrency(level2Earnings);
+                level3TotalDisplay.textContent = formatNumber(level3TotalPeople);
+                level3PreviewDisplay.textContent = formatCurrency(level3Earnings);
+
+                // Update earnings displays
+                earnings1Display.textContent = formatCurrency(level1Earnings);
+                earnings2Display.textContent = formatCurrency(level2Earnings);
+                earnings3Display.textContent = formatCurrency(level3Earnings);
+                totalEarningsDisplay.textContent = formatCurrency(totalEarnings);
+            }
+
+            // Add event listeners for real-time updates
+            if (level1Input && level2Input && level3Input) {
+                level1Input.addEventListener('input', calculateEarnings);
+                level2Input.addEventListener('input', calculateEarnings);
+                level3Input.addEventListener('input', calculateEarnings);
+
+                // Initial calculation
+                calculateEarnings();
+            }
+        })();
+
+        // Social Dropdown Toggle
+        (function() {
+            const toggle = document.getElementById('socialToggle');
+            const menu = document.getElementById('socialMenu');
+
+            if (toggle && menu) {
+                toggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    menu.classList.toggle('hidden');
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('#socialDropdown')) {
+                        menu.classList.add('hidden');
+                    }
+                });
+            }
+        })();
+
+    </script>
+
+
+
+</body></html>
+
